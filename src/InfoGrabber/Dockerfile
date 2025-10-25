@@ -1,23 +1,12 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+﻿FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5000
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["InfoGrabber/InfoGrabber.csproj", "InfoGrabber/"]
-RUN dotnet restore "InfoGrabber/InfoGrabber.csproj"
-COPY . .
-WORKDIR "/src/InfoGrabber"
-RUN dotnet build "./InfoGrabber.csproj" -c $BUILD_CONFIGURATION -o /app/build
+COPY src/InfoGrabber/InfoGrabber.csproj ./
+RUN dotnet restore InfoGrabber.csproj
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./InfoGrabber.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+COPY src/InfoGrabber/. ./
+RUN dotnet build InfoGrabber.csproj -c Debug -o /app/build
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "InfoGrabber.dll"]
