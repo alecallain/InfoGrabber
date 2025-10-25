@@ -1,24 +1,16 @@
-﻿# Build UI
-FROM node:22 AS build-ui
+﻿FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
 WORKDIR /app
+EXPOSE 5000
 
-COPY client/package*.json ./
-RUN npm ci
+COPY InfoGrabber.csproj ./
+RUN dotnet restore
 
-COPY client/. ./
-RUN npm run build
+COPY . ./
+RUN dotnet publish -c Debug -o /app/publish
 
-# Build Web Api
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-EXPOSE 5000 5173
-
-COPY src/InfoGrabber/InfoGrabber.csproj ./
-RUN dotnet restore InfoGrabber.csproj
-
-COPY src/InfoGrabber/. ./
-RUN dotnet build InfoGrabber.csproj -c Debug -o /app/build
+COPY --from=build /app/publish ./
 
 ENTRYPOINT ["dotnet", "InfoGrabber.dll"]
