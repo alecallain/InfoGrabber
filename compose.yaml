@@ -1,0 +1,7 @@
+﻿services:
+  infograbber:
+    image: infograbber
+    build:
+      context: .
+      dockerfile: InfoGrabber/Dockerfile
+
