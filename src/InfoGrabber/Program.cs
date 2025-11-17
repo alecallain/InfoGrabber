@@ -24,6 +24,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
+
 app.MapGet("/{id:int}", (int id) =>
     {
 
