@@ -62,6 +62,9 @@ CodeCoverage/
 /dataSources/
 /dataSources.local.xml
 
+# Docker
+/.env
+
 # Logs
 logs
 *.log

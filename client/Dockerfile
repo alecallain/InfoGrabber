@@ -1,9 +1,0 @@
-FROM node:22
-WORKDIR /app
-EXPOSE 5173
-
-COPY package*.json ./
-RUN npm ci
-COPY . ./
-
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]

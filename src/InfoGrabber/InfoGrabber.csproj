@@ -18,10 +18,6 @@
     <ItemGroup>
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
-        <DependentUpon>Dockerfile.dev</DependentUpon>
-      </Content>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
 
