@@ -1,6 +1,7 @@
 name: Deploy Info Grabbger to Azure
 env: 
   AZURE_WEBAPP_NAME: test-info-grabber-app
+  REPO: alecallain/InfoGrabber
 
 on:
   push:
