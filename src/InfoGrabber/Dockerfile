@@ -11,7 +11,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-backend
 WORKDIR /src
 COPY *.sln ./
 COPY src/InfoGrabber/*.csproj ./src/InfoGrabber/
-COPY tests/InfoGrabber.Tests/*.csproj ./tests/InfoGrabber.Tests/
+COPY test/InfoGrabber.Tests/*.csproj ./test/InfoGrabber.Tests/
 RUN dotnet restore
 COPY . .
 RUN dotnet publish ./src/InfoGrabber/ -c Release -o /app/publish
